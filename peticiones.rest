@@ -1,0 +1,48 @@
+@URL=http://localhost:3000/api
+
+### Recupera todos los autores
+GET {{URL}}/autores
+Content-Type: application/json    
+
+### Recupera un autor por ID
+###Requiere incluir el ID del autor en la URL
+GET {{URL}}/autores/4
+Content-Type: application/json
+
+### Recupera todos los posts
+GET {{URL}}/posts
+Content-Type: application/json
+
+### Recupera los datos del post acompañado de todos los datos del autor de este.
+###Requiere incluir el ID del post en la URL 
+GET {{URL}}/posts/1 
+Content-Type: application/json 
+
+
+### Recupera todos los posts escritos por un autor concreto.
+###Requiere incluir el ID del autor en la URL 
+GET {{URL}}/posts/autor/1
+Content-Type: application/json
+
+### Crea un nuevo autor
+POST {{URL}}/autores
+Content-Type: application/json
+
+{
+  "nombre": "Camila Gómez",
+  "email": "camila.gomez@example.com",
+"imagen": "https://randomuser.me/api/portraits/women/1.jpg"
+}
+
+### Crea un nuevo post
+POST {{URL}}/posts
+Content-Type: application/json
+
+{
+  "titulo": "Mi primer post",
+  "descripcion": "Este es el contenido de mi primer post sobre desarrollo web.",
+  "categoria": "Tecnología",
+  "autor_id": 1
+}
+ 
+
