@@ -1,6 +1,6 @@
 import Autor from '../models/autor.model.js';
 
-// Get all authors
+// Obtener todos los autores
 export const getAllAutores = async (req, res) => {
   try {
     const autores = await Autor.getAll();
@@ -10,7 +10,7 @@ export const getAllAutores = async (req, res) => {
   }
 };
 
-// Get author by ID
+// Obtener autor por ID
 export const getAutorById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -24,17 +24,24 @@ export const getAutorById = async (req, res) => {
   }
 };
 
-// Create new author
+// Crear nuevo autor
 export const createAutor = async (req, res) => {
   try {
     const autorId = await Autor.create(req.body);
-    res.status(201).json({ id: autorId, message: 'Autor creado exitosamente' });
+    res.status(201).json({ id: autorId, mensaje: 'Autor creado exitosamente' });
   } catch (error) {
+    // Control de email duplicado
+    if (error.code === 'ER_DUP_ENTRY') {
+      return res.status(409).json({ 
+        error: 'El email ya está registrado',
+        mensaje: 'Ya existe un autor con ese correo electrónico'
+      });
+    }
     res.status(500).json({ error: error.message });
   }
 };
 
-// Update author
+// Actualizar autor
 export const updateAutor = async (req, res) => {
   try {
     const { id } = req.params;
@@ -42,13 +49,20 @@ export const updateAutor = async (req, res) => {
     if (affectedRows === 0) {
       return res.status(404).json({ error: 'Autor no encontrado' });
     }
-    res.json({ message: 'Autor actualizado exitosamente' });
+    res.json({ mensaje: 'Autor actualizado exitosamente' });
   } catch (error) {
+    // Control de email duplicado
+    if (error.code === 'ER_DUP_ENTRY') {
+      return res.status(409).json({ 
+        error: 'El email ya está registrado',
+        mensaje: 'Ya existe otro autor con ese correo electrónico'
+      });
+    }
     res.status(500).json({ error: error.message });
   }
 };
 
-// Delete author
+// Eliminar autor
 export const deleteAutor = async (req, res) => {
   try {
     const { id } = req.params;
@@ -56,7 +70,7 @@ export const deleteAutor = async (req, res) => {
     if (affectedRows === 0) {
       return res.status(404).json({ error: 'Autor no encontrado' });
     }
-    res.json({ message: 'Autor eliminado exitosamente' });
+    res.json({ mensaje: 'Autor eliminado exitosamente' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

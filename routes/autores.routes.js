@@ -6,22 +6,28 @@ import {
   updateAutor,
   deleteAutor
 } from '../controllers/autores.controller.js';
+import { validate } from '../middlewares/validator.middleware.js';
+import {
+  createAutorSchema,
+  updateAutorSchema,
+  autorIdSchema
+} from '../validations/autores.validation.js';
 
 const router = express.Router();
 
-// GET all authors
+// Obtener todos los autores
 router.get('/', getAllAutores);
 
-// GET single author by ID
-router.get('/:id', getAutorById);
+// Obtener un autor por ID
+router.get('/:id', validate(autorIdSchema), getAutorById);
 
-// POST create new author
-router.post('/', createAutor);
+// Crear un nuevo autor
+router.post('/', validate(createAutorSchema), createAutor);
 
-// PUT update author
-router.put('/:id', updateAutor);
+// Actualizar un autor
+router.put('/:id', validate(updateAutorSchema), updateAutor);
 
-// DELETE author
-router.delete('/:id', deleteAutor);
+// Eliminar un autor
+router.delete('/:id', validate(autorIdSchema), deleteAutor);
 
 export default router;

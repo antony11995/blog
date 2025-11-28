@@ -1,7 +1,7 @@
 import pool from '../config/db.js';
 
 class Post {
-  // Get all posts
+  // Obtener todos los posts
   static async getAll() {
     const [rows] = await pool.query(`
       SELECT p.*, a.nombre as autor_nombre, a.email as autor_email, a.imagen as autor_imagen 
@@ -11,7 +11,7 @@ class Post {
     return rows;
   }
 
-  // Get post by ID
+  // Obtener post por ID
   static async getById(id) {
     const [rows] = await pool.query(`
       SELECT p.*, a.nombre as autor_nombre, a.email as autor_email, a.imagen as autor_imagen 
@@ -22,13 +22,13 @@ class Post {
     return rows[0];
   }
 
-  // Get posts by author
+  // Obtener posts por autor
   static async getByAuthor(autorId) {
     const [rows] = await pool.query('SELECT * FROM posts WHERE autor_id = ?', [autorId]);
     return rows;
   }
 
-  // Create new post
+  // Crear nuevo post
   static async create(post) {
     const { titulo, descripcion, categoria, autor_id } = post;
     const [result] = await pool.query(
@@ -38,7 +38,7 @@ class Post {
     return result.insertId;
   }
 
-  // Update post
+  // Actualizar post
   static async update(id, post) {
     const { titulo, descripcion, categoria, autor_id } = post;
     const [result] = await pool.query(
@@ -48,7 +48,7 @@ class Post {
     return result.affectedRows;
   }
 
-  // Delete post
+  // Eliminar post
   static async delete(id) {
     const [result] = await pool.query('DELETE FROM posts WHERE id = ?', [id]);
     return result.affectedRows;

@@ -1,19 +1,19 @@
 import pool from '../config/db.js';
 
 class Autor {
-  // Get all authors
+  // Obtener todos los autores
   static async getAll() {
     const [rows] = await pool.query('SELECT * FROM autores');
     return rows;
   }
 
-  // Get author by ID
+  // Obtener autor por ID
   static async getById(id) {
     const [rows] = await pool.query('SELECT * FROM autores WHERE id = ?', [id]);
     return rows[0];
   }
 
-  // Create new author
+  // Crear nuevo autor
   static async create(autor) {
     const { nombre, email, imagen } = autor;
     const [result] = await pool.query(
@@ -23,7 +23,7 @@ class Autor {
     return result.insertId;
   }
 
-  // Update author
+  // Actualizar autor
   static async update(id, autor) {
     const { nombre, email, imagen } = autor;
     const [result] = await pool.query(
@@ -33,7 +33,7 @@ class Autor {
     return result.affectedRows;
   }
 
-  // Delete author
+  // Eliminar autor
   static async delete(id) {
     const [result] = await pool.query('DELETE FROM autores WHERE id = ?', [id]);
     return result.affectedRows;

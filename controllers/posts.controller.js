@@ -1,6 +1,6 @@
 import Post from '../models/post.model.js';
 
-// Get all posts
+// Obtener todos los posts
 export const getAllPosts = async (req, res) => {
   try {
     const posts = await Post.getAll();
@@ -10,7 +10,7 @@ export const getAllPosts = async (req, res) => {
   }
 };
 
-// Get post by ID
+// Obtener post por ID
 export const getPostById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -24,7 +24,7 @@ export const getPostById = async (req, res) => {
   }
 };
 
-// Get posts by author
+// Obtener posts por autor
 export const getPostsByAuthor = async (req, res) => {
   try {
     const { autorId } = req.params;
@@ -35,17 +35,17 @@ export const getPostsByAuthor = async (req, res) => {
   }
 };
 
-// Create new post
+// Crear nuevo post
 export const createPost = async (req, res) => {
   try {
     const postId = await Post.create(req.body);
-    res.status(201).json({ id: postId, message: 'Post creado exitosamente' });
+    res.status(201).json({ id: postId, mensaje: 'Post creado exitosamente' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
-// Update post
+// Actualizar post
 export const updatePost = async (req, res) => {
   try {
     const { id } = req.params;
@@ -53,13 +53,13 @@ export const updatePost = async (req, res) => {
     if (affectedRows === 0) {
       return res.status(404).json({ error: 'Post no encontrado' });
     }
-    res.json({ message: 'Post actualizado exitosamente' });
+    res.json({ mensaje: 'Post actualizado exitosamente' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
-// Delete post
+// Eliminar post
 export const deletePost = async (req, res) => {
   try {
     const { id } = req.params;
@@ -67,7 +67,7 @@ export const deletePost = async (req, res) => {
     if (affectedRows === 0) {
       return res.status(404).json({ error: 'Post no encontrado' });
     }
-    res.json({ message: 'Post eliminado exitosamente' });
+    res.json({ mensaje: 'Post eliminado exitosamente' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

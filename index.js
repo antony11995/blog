@@ -1,17 +1,32 @@
-import express from 'express';
 import dotenv from 'dotenv';
-import cors from 'cors';
-import apiRoutes from './routes/api.routes.js';
+import app from './app.js';
 
+// Cargar variables de entorno
 dotenv.config();
-const app = express();
-app.use(express.json());
+
+// Obtener puerto del entorno o usar el predeterminado
 const PORT = process.env.PORT || 3000;
 
-
-app.listen(PORT, () => {
-  console.log("Servidor escuchando en puerto " + PORT);
+// Iniciar servidor
+const server = app.listen(PORT, () => {
+  console.log(`🚀 Servidor ejecutándose en el puerto ${PORT}`);
+  console.log(`📍 Entorno: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`🔗 API disponible en: http://localhost:${PORT}/api`);
 });
 
-app.use(cors());
-app.use("/api", apiRoutes);
+// Apagado controlado del servidor
+process.on('SIGTERM', () => {
+  console.log('Señal SIGTERM recibida: cerrando servidor HTTP');
+  server.close(() => {
+    console.log('Servidor HTTP cerrado');
+    process.exit(0);
+  });
+});
+
+process.on('SIGINT', () => {
+  console.log('\nSeñal SIGINT recibida: cerrando servidor HTTP');
+  server.close(() => {
+    console.log('Servidor HTTP cerrado');
+    process.exit(0);
+  });
+});
