@@ -29,9 +29,9 @@ POST {{URL}}/autores
 Content-Type: application/json
 
 {
-  "nombre": "Camila Gómez",
-  "email": "camila.gomez@example.com",
-"imagen": "https://randomuser.me/api/portraits/women/1.jpg"
+  "nombre": "Eva Rodríguez",
+  "email": "eva.rodriguez@example.com",
+"imagen": "https://randomuser.me/api/portraits/women/4.jpg"
 }
 
 ### Crea un nuevo post
